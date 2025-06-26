@@ -48,7 +48,7 @@ class UserLocationRepository {
         options: Options(
           headers: {
             'User-Agent':
-                'PulseApp/1.0', // OpenStreetMap requiert un User-Agent
+                'TripizApp/1.0', // OpenStreetMap requiert un User-Agent
           },
         ),
       );

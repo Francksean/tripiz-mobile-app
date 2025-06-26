@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-// part 'station_position.g.dart';
+part 'station_position.g.dart';
 
 @JsonSerializable()
 class StationPosition {
@@ -32,9 +32,9 @@ class StationPosition {
   }
 
   // Méthode fromJson générée par json_serializable
-  // factory StationPosition.fromJson(Map<String, dynamic> json) =>
-  //     _$StationPositionFromJson(json);
+  factory StationPosition.fromJson(Map<String, dynamic> json) =>
+      _$StationPositionFromJson(json);
 
   // Méthode toJson générée par json_serializable
-  // Map<String, dynamic> toJson() => _$StationPositionToJson(this);
+  Map<String, dynamic> toJson() => _$StationPositionToJson(this);
 }

@@ -49,6 +49,7 @@ dependencies:
   flutter_compass: ^0.8.1
   dotted_line: ^3.2.3
   json_serializable: ^6.8.0
+  web_socket_channel: ^3.0.3
 
 dev_dependencies:
   flutter_test:

@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:tripiz_app/common/common_scaffold.dart';
 import 'package:tripiz_app/common/constants/app_colors.dart';
 import 'package:tripiz_app/common/cubits/location/location_cubit.dart';
+import 'package:tripiz_app/home/cubits/bus-position/bus_position_cubit.dart';
+import 'package:tripiz_app/home/cubits/map-station/map_station_cubit.dart';
 import 'package:tripiz_app/wallet/cubits/wallet_cubit.dart';
 import 'package:tripiz_app/welcome/screens/onboarding_screen.dart';
 import 'package:tripiz_app/welcome/screens/welcome_screen.dart';
@@ -38,6 +40,8 @@ class MyApp extends StatelessWidget {
                     ..startTracking(),
         ),
         BlocProvider(create: (context) => WalletCubit()),
+        BlocProvider(create: (context) => MapStationCubit()),
+        BlocProvider(create: (context) => BusPositionCubit()),
       ],
       child: MaterialApp.router(
         title: 'Flutter Demo',

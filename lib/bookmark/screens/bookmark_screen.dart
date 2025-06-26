@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tripiz_app/common/constants/app_colors.dart';
+import 'package:tripiz_app/common/constants/font_sizes.dart';
 
 class BookmarkScreen extends StatefulWidget {
   const BookmarkScreen({super.key});
@@ -10,6 +12,23 @@ class BookmarkScreen extends StatefulWidget {
 class _BookmarkScreenState extends State<BookmarkScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 15.0,
+        right: 15.0,
+        top: kToolbarHeight + 40,
+      ),
+      child: Column(
+        children: [
+          Text(
+            "Accédez rapidement à vos destinations favorites",
+            style: TextStyle(
+              color: AppColors.black,
+              fontSize: FontSizes.lowerBig,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
