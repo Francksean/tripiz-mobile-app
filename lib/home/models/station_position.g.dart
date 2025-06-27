@@ -8,16 +8,16 @@ part of 'station_position.dart';
 
 StationPosition _$StationPositionFromJson(Map<String, dynamic> json) =>
     StationPosition(
-      id: (json['id'] as num?)?.toInt(),
-      name: json['name'] as String?,
+      stationId: json['stationId'] as String?,
+      stationName: json['stationName'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$StationPositionToJson(StationPosition instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
+      'stationId': instance.stationId,
+      'stationName': instance.stationName,
       'latitude': instance.latitude,
       'longitude': instance.longitude,
     };

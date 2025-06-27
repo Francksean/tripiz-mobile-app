@@ -13,9 +13,9 @@ class UserExpense extends UserTransaction {
   UserExpense({
     this.departure,
     this.arrival,
-    super.type,
+    super.transactionType,
     super.amount,
-    super.date,
+    super.timestamp,
   });
 
   factory UserExpense.fromJson(Map<String, dynamic> json) =>
@@ -28,9 +28,9 @@ class UserExpense extends UserTransaction {
     return UserExpense(
       departure: departure ?? this.departure,
       arrival: arrival ?? this.arrival,
-      type: type,
+      transactionType: transactionType,
       amount: amount,
-      date: date,
+      timestamp: timestamp,
     );
   }
 

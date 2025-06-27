@@ -8,20 +8,22 @@ part of 'user_transaction.dart';
 
 UserTransaction _$UserTransactionFromJson(Map<String, dynamic> json) =>
     UserTransaction(
-      type: $enumDecodeNullable(_$TransactionTypeEnumMap, json['type']),
+      transactionType: $enumDecodeNullable(
+          _$TransactionTypeEnumMap, json['transactionType']),
       amount: (json['amount'] as num?)?.toDouble(),
-      date:
-          json['date'] == null ? null : DateTime.parse(json['date'] as String),
+      timestamp: json['timestamp'] == null
+          ? null
+          : DateTime.parse(json['timestamp'] as String),
     );
 
 Map<String, dynamic> _$UserTransactionToJson(UserTransaction instance) =>
     <String, dynamic>{
-      'type': _$TransactionTypeEnumMap[instance.type],
+      'transactionType': _$TransactionTypeEnumMap[instance.transactionType],
       'amount': instance.amount,
-      'date': instance.date?.toIso8601String(),
+      'timestamp': instance.timestamp?.toIso8601String(),
     };
 
 const _$TransactionTypeEnumMap = {
-  TransactionType.depense: 'depense',
-  TransactionType.recharge: 'recharge',
+  TransactionType.SPENDING: 'SPENDING',
+  TransactionType.RECHARGE: 'RECHARGE',
 };

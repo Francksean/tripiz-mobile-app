@@ -5,26 +5,21 @@ part 'bus_position.g.dart';
 
 @JsonSerializable()
 class BusPosition {
-  final String? id;
-  final LatLng? position;
-  final double? heading;
+  final String busId;
+  final double latitude;
+  final double longitude;
 
   BusPosition({
-    required this.id,
-    required this.position,
-    required this.heading,
+    required this.busId,
+    required this.latitude,
+    required this.longitude,
   });
 
-  BusPosition copyWith({
-    String? id,
-    LatLng? position,
-    double? heading,
-    DateTime? lastUpdate,
-  }) {
+  BusPosition copyWith({String? id, double? latitude, double? longitude}) {
     return BusPosition(
-      id: id ?? this.id,
-      position: position ?? this.position,
-      heading: heading ?? this.heading,
+      busId: id ?? busId,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
   }
 

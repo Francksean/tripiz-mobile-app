@@ -12,7 +12,7 @@ class TransactionUnitCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isRecharge = transaction.type == TransactionType.recharge;
+    final isRecharge = transaction.transactionType == TransactionType.RECHARGE;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -42,7 +42,7 @@ class TransactionUnitCard extends StatelessWidget {
                     ),
 
                     Text(
-                      '${transaction.date!.hour}:${transaction.date!.minute}',
+                      '${transaction.timestamp!.hour}:${transaction.timestamp!.minute}',
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
@@ -51,15 +51,26 @@ class TransactionUnitCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      isRecharge
-                          ? 'Via ${(transaction as UserRecharge).rechargerNumber}'
-                          : '${(transaction as UserExpense).departure} → ${(transaction as UserExpense).arrival}',
+                    Expanded(
+                      child: Text(() {
+                        if (transaction is UserRecharge) {
+                          return 'Via ${(transaction as UserRecharge).rechargerNumber}';
+                        } else if (transaction is UserExpense) {
+                          final expense = transaction as UserExpense;
+                          return '${expense.departure ?? '—'} → ${expense.arrival ?? '—'}';
+                        } else {
+                          return 'Transaction';
+                        }
+                      }(), overflow: TextOverflow.ellipsis),
                     ),
                     Text(
-                      '${isRecharge ? '+' : '-'}${transaction.amount!} Fcfa',
+                      '${transaction.transactionType == TransactionType.RECHARGE ? '+' : '-'}${transaction.amount?.toStringAsFixed(0) ?? '0'} Fcfa',
                       style: TextStyle(
-                        color: isRecharge ? Colors.green : Colors.red,
+                        color:
+                            transaction.transactionType ==
+                                    TransactionType.RECHARGE
+                                ? Colors.green
+                                : Colors.red,
                         fontWeight: FontWeight.bold,
                         fontSize: FontSizes.lowerLarge,
                       ),

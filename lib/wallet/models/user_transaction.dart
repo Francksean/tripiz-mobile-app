@@ -6,11 +6,11 @@ part 'user_transaction.g.dart';
 
 @JsonSerializable()
 class UserTransaction {
-  TransactionType? type;
+  TransactionType? transactionType;
   double? amount;
-  DateTime? date;
+  DateTime? timestamp;
 
-  UserTransaction({this.type, this.amount, this.date});
+  UserTransaction({this.transactionType, this.amount, this.timestamp});
 
   factory UserTransaction.fromJson(Map<String, dynamic> json) =>
       _$UserTransactionFromJson(json);

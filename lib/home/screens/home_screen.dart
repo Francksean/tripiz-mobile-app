@@ -3,15 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:tripiz_app/common/components/custom_bottom_sheet.dart';
 
 import 'package:tripiz_app/common/constants/app_colors.dart';
 import 'package:tripiz_app/common/cubits/location/location_cubit.dart';
 import 'package:tripiz_app/common/cubits/location/location_state.dart';
+import 'package:tripiz_app/home/components/qr_code_generate_button.dart';
+import 'package:tripiz_app/home/components/itinerary_card.dart';
+import 'package:tripiz_app/home/components/station_details_bottom_sheet.dart';
 import 'package:tripiz_app/home/cubits/bus-position/bus_position_cubit.dart';
 import 'package:tripiz_app/home/cubits/bus-position/bus_position_state.dart';
 import 'package:tripiz_app/home/cubits/map-station/map_station_cubit.dart';
 import 'package:tripiz_app/home/cubits/map-station/map_station_state.dart';
 import 'package:tripiz_app/home/components/user_position_marker.dart';
+import 'package:tripiz_app/home/models/payment_info.dart';
 
 /// Écran principal : affiche la carte et superpose
 /// les différentes couches (tuile, stations, bus, utilisateur).
@@ -44,8 +49,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // Au démarrage on pré‑charge les stations d'une fenêtre très large.
     context.read<MapStationCubit>().fetchStationsInBounds(<double>[
       -90,
-      -180,
       90,
+      -180,
       180,
     ]);
   }
@@ -126,31 +131,47 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   /// Couches des stations – obtenues depuis le MapStationCubit.
   Widget _stationLayer() {
     return BlocBuilder<MapStationCubit, MapStationState>(
-      builder: (_, state) {
+      builder: (context, state) {
         if (state is! MapStationLoaded || state.MapStations.isEmpty) {
           return const MarkerLayer(markers: []);
         }
 
-        final markers = state.MapStations.map(
-          (station) => Marker(
-            point: LatLng(station.latitude!, station.longitude!),
-            width: 40,
-            height: 40,
-            child: GestureDetector(
-              onTap:
-                  () => _animateToMarker(
-                    LatLng(station.latitude!, station.longitude!),
-                  ),
-              child: const Icon(
-                Icons.store_mall_directory,
-                size: 32,
-                color: AppColors.red,
-              ),
-            ),
-          ),
-        );
+        final markers =
+            state.MapStations.map(
+              (station) => Marker(
+                point: LatLng(station.latitude!, station.longitude!),
+                width: 40,
+                height: 40,
+                child: GestureDetector(
+                  onTap: () {
+                    // Animation vers la station
+                    _animateToMarker(
+                      LatLng(station.latitude!, station.longitude!),
+                    );
 
-        return MarkerLayer(markers: markers.toList());
+                    // Affichage de la bottom sheet avec les détails de la station
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) {
+                        return CustomBottomSheet(
+                          heightRatio: 0.6,
+                          child: StationDetailsBottomSheet(station: station),
+                        );
+                      },
+                    );
+                  },
+                  child: const Icon(
+                    Icons.store_mall_directory,
+                    size: 32,
+                    color: AppColors.red,
+                  ),
+                ),
+              ),
+            ).toList();
+
+        return MarkerLayer(markers: markers);
       },
     );
   }
@@ -165,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
         final markers = state.buses.map(
           (bus) => Marker(
-            point: LatLng(bus.position!.latitude, bus.position!.longitude),
+            point: LatLng(bus.latitude, bus.longitude),
             width: 40,
             height: 40,
             rotate: true,

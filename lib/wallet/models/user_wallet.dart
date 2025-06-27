@@ -6,7 +6,7 @@ part 'user_wallet.g.dart';
 
 @JsonSerializable()
 class UserWallet {
-  int? balance;
+  double? balance;
   List<UserTransaction>? transactions;
 
   UserWallet({this.balance, this.transactions});
@@ -16,7 +16,7 @@ class UserWallet {
 
   Map<String, dynamic> toJson() => _$UserWalletToJson(this);
 
-  UserWallet copyWith({int? balance, List<UserTransaction>? transactions}) {
+  UserWallet copyWith({double? balance, List<UserTransaction>? transactions}) {
     return UserWallet(
       balance: balance ?? this.balance,
       transactions: transactions ?? this.transactions,

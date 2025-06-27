@@ -3,9 +3,15 @@ import 'package:go_router/go_router.dart';
 import 'package:tripiz_app/common/constants/app_colors.dart';
 
 class CustomBottomSheet extends StatelessWidget {
+  final double? heightRatio;
   final Widget child;
   final VoidCallback? onCancel;
-  const CustomBottomSheet({super.key, required this.child, this.onCancel});
+  const CustomBottomSheet({
+    super.key,
+    required this.child,
+    this.onCancel,
+    this.heightRatio = 0.4,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,7 @@ class CustomBottomSheet extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: availableHeight * 0.4,
+      height: availableHeight * heightRatio!,
       constraints: BoxConstraints(maxHeight: availableHeight * 0.7),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,

@@ -7,9 +7,10 @@ import 'package:tripiz_app/common/components/custom_input_field.dart';
 import 'package:tripiz_app/common/constants/app_colors.dart';
 import 'package:tripiz_app/common/constants/font_sizes.dart';
 import 'package:tripiz_app/common/utils/custom_date_utils.dart';
+import 'package:tripiz_app/wallet/components/recharge_bottom_card.dart';
 import 'package:tripiz_app/wallet/components/transaction_unit_card.dart';
 import 'package:tripiz_app/wallet/components/tranx_type_choice_chip.dart';
-import 'package:tripiz_app/wallet/cubits/wallet_cubit.dart';
+import 'package:tripiz_app/wallet/cubits/wallet/wallet_cubit.dart';
 import 'package:tripiz_app/wallet/enum/transaction_type.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -71,7 +72,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 onSelected: () {
                   setState(() => selectedLabel = "Dépenses");
                   context.read<WalletCubit>().sortTransactionsByType(
-                    TransactionType.depense,
+                    TransactionType.SPENDING,
                   );
                   print("111111111111111111111111");
                 },
@@ -82,9 +83,8 @@ class _WalletScreenState extends State<WalletScreen> {
                 onSelected: () {
                   setState(() => selectedLabel = "Recharges");
                   context.read<WalletCubit>().sortTransactionsByType(
-                    TransactionType.recharge,
+                    TransactionType.RECHARGE,
                   );
-                  print("0000000000000000000");
                 },
               ),
             ],
@@ -132,7 +132,11 @@ class _WalletScreenState extends State<WalletScreen> {
                   showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return CustomBottomSheet(child: Container());
+                      return CustomBottomSheet(
+                        child: RechargeBottomCard(
+                          walletId: "94f94902-c724-47ca-85d7-529af32b4a64",
+                        ),
+                      );
                     },
                   );
                 },

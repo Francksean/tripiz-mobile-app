@@ -7,7 +7,7 @@ part of 'user_wallet.dart';
 // **************************************************************************
 
 UserWallet _$UserWalletFromJson(Map<String, dynamic> json) => UserWallet(
-      balance: (json['balance'] as num?)?.toInt(),
+      balance: (json['balance'] as num?)?.toDouble(),
       transactions: (json['transactions'] as List<dynamic>?)
           ?.map((e) => UserTransaction.fromJson(e as Map<String, dynamic>))
           .toList(),

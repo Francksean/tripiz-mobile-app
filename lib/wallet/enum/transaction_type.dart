@@ -1,1 +1,1 @@
-enum TransactionType { depense, recharge }
+enum TransactionType { SPENDING, RECHARGE }

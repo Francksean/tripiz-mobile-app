@@ -10,7 +10,7 @@ class DioClient {
   DioClient._internal() {
     dio = Dio(
       BaseOptions(
-        baseUrl: 'http://tripiz-api-production.up.railway.app',
+        baseUrl: 'https://tripiz-api-production.up.railway.app',
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 15),
       ),

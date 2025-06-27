@@ -6,7 +6,7 @@ import 'package:tripiz_app/common/constants/app_colors.dart';
 import 'package:tripiz_app/common/cubits/location/location_cubit.dart';
 import 'package:tripiz_app/home/cubits/bus-position/bus_position_cubit.dart';
 import 'package:tripiz_app/home/cubits/map-station/map_station_cubit.dart';
-import 'package:tripiz_app/wallet/cubits/wallet_cubit.dart';
+import 'package:tripiz_app/wallet/cubits/wallet/wallet_cubit.dart';
 import 'package:tripiz_app/welcome/screens/onboarding_screen.dart';
 import 'package:tripiz_app/welcome/screens/welcome_screen.dart';
 

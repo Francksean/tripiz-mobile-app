@@ -15,7 +15,9 @@ class WalletCubit extends Cubit<WalletState> {
   Future<void> loadWallet() async {
     emit(WalletLoading());
     try {
-      final wallet = await _walletService.getWallet();
+      final wallet = await _walletService.getWallet(
+        "94f94902-c724-47ca-87d7-579af32b4a63",
+      );
       final grouped = _groupTransactionsByDate(wallet.transactions!);
       emit(WalletLoaded(wallet, grouped));
     } catch (e) {
@@ -23,7 +25,6 @@ class WalletCubit extends Cubit<WalletState> {
     }
   }
 
-  // FIXME : la fonction pour trier ne fonctionne pas
   void sortTransactionsByType(TransactionType? type) {
     final currentState = state;
     if (currentState is WalletLoaded) {
@@ -44,8 +45,8 @@ class WalletCubit extends Cubit<WalletState> {
     List<UserTransaction> transactions,
     TransactionType type,
   ) {
-    return transactions.where((t) => t.type == type).toList()
-      ..addAll(transactions.where((t) => t.type != type).toList());
+    return transactions.where((t) => t.transactionType == type).toList()
+      ..addAll(transactions.where((t) => t.transactionType != type).toList());
   }
 
   Map<DateTime, List<UserTransaction>> _groupTransactionsByDate(
@@ -55,9 +56,9 @@ class WalletCubit extends Cubit<WalletState> {
 
     for (final transaction in transactions) {
       final date = DateTime(
-        transaction.date!.year,
-        transaction.date!.month,
-        transaction.date!.day,
+        transaction.timestamp!.year,
+        transaction.timestamp!.month,
+        transaction.timestamp!.day,
       );
 
       if (grouped.containsKey(date)) {

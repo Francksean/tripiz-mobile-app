@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:tripiz_app/common/dio/dio_client.dart';
 import 'package:tripiz_app/home/models/station_position.dart';
 
@@ -13,16 +12,26 @@ class MapStationService {
     try {
       if (bounds.length != 4) throw "Requires exactly 4 bounds points";
 
-      final response = await dioClient.dio.get(
-        '/stations',
-        // TODO : finaliser l'envoi des données
+      final response = await dioClient.dio.post(
+        '/station/stations/within-square',
+        data: {
+          "minLat": bounds[0],
+          "minLng": bounds[2],
+          "maxLat": bounds[1],
+          "maxLng": bounds[3],
+        },
       );
 
-      return (response.data as List)
-          .map((stationJson) => StationPosition.fromJson(stationJson))
-          .toList();
+      if (response.statusCode == 200) {
+        print(response.data);
+        return (response.data as List)
+            .map((stationJson) => StationPosition.fromJson(stationJson))
+            .toList();
+      } else {
+        throw Exception("erreur lors de la récupération des stations");
+      }
     } on DioException catch (e) {
-      log('API Error: ${e.response?.data ?? e.message}');
+      log('API Error: ${e.message}');
       throw "Failed to load stations: ${e.response?.data?['error'] ?? e.message}";
     } catch (e) {
       log('Unexpected error: $e');

@@ -9,7 +9,12 @@ part 'user_recharge.g.dart';
 class UserRecharge extends UserTransaction {
   String? rechargerNumber;
 
-  UserRecharge({this.rechargerNumber, super.type, super.amount, super.date});
+  UserRecharge({
+    this.rechargerNumber,
+    super.transactionType,
+    super.amount,
+    super.timestamp,
+  });
 
   factory UserRecharge.fromJson(Map<String, dynamic> json) =>
       _$UserRechargeFromJson(json);
@@ -20,9 +25,9 @@ class UserRecharge extends UserTransaction {
   UserRecharge copyWith({String? rechargerNumber}) {
     return UserRecharge(
       rechargerNumber: rechargerNumber ?? this.rechargerNumber,
-      type: type,
+      transactionType: transactionType,
       amount: amount,
-      date: date,
+      timestamp: timestamp,
     );
   }
 
