@@ -97,7 +97,7 @@ class _WalletScreenState extends State<WalletScreen> {
             label: "Dépenses",
             isSelected: selectedLabel == "Dépenses",
             onSelected: () {
-              setState(() => selectedLabel == "Dépenses");
+              setState(() => selectedLabel = "Dépenses");
               context.read<WalletCubit>().sortTransactionsByType(
                 TransactionType.SPENDING,
               );
@@ -108,7 +108,7 @@ class _WalletScreenState extends State<WalletScreen> {
             label: "Recharges",
             isSelected: selectedLabel == "Recharges",
             onSelected: () {
-              setState(() => selectedLabel == "Recharges");
+              setState(() => selectedLabel = "Recharges");
               context.read<WalletCubit>().sortTransactionsByType(
                 TransactionType.RECHARGE,
               );
