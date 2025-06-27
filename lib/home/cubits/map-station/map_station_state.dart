@@ -2,30 +2,31 @@ import 'package:equatable/equatable.dart';
 import 'package:tripiz_app/home/models/station_position.dart';
 
 abstract class MapStationState extends Equatable {
-  const MapStationState();
+  final List<StationPosition> stations;
+
+  const MapStationState(this.stations);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [stations];
 }
 
-class MapStationInitial extends MapStationState {}
+class MapStationInitial extends MapStationState {
+  const MapStationInitial() : super(const []);
+}
 
-class MapStationLoading extends MapStationState {}
+class MapStationLoading extends MapStationState {
+  const MapStationLoading(super.stations);
+}
 
 class MapStationLoaded extends MapStationState {
-  final List<StationPosition> MapStations;
-
-  const MapStationLoaded(this.MapStations);
-
-  @override
-  List<Object> get props => [MapStations];
+  const MapStationLoaded(super.stations);
 }
 
 class MapStationError extends MapStationState {
   final String message;
 
-  const MapStationError(this.message);
+  const MapStationError(this.message, super.stations);
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [message, ...super.props];
 }

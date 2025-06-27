@@ -20,7 +20,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     LocationState state = context.read<LocationCubit>().state;
     if (state is LocationLoadedState) {
       Future.delayed(const Duration(seconds: 1), () {
-        if (context.mounted) context.go("/app");
+        if (context.mounted) context.go("/onboarding");
       });
     }
   }
@@ -33,7 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         listener: (context, state) {
           if (state is LocationLoadedState) {
             Future.delayed(const Duration(seconds: 1), () {
-              if (context.mounted) context.go("/app");
+              if (context.mounted) context.go("/onboarding");
             });
           }
         },

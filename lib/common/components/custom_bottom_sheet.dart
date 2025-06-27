@@ -21,76 +21,85 @@ class CustomBottomSheet extends StatelessWidget {
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
 
-    return Container(
-      width: double.infinity,
-      height: availableHeight * heightRatio!,
-      constraints: BoxConstraints(maxHeight: availableHeight * 0.7),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          // Close button
-          GestureDetector(
-            onTap: () {
-              if (onCancel != null) {
-                onCancel!();
-              } else {
-                context.pop();
-              }
-            },
-            child: Container(
-              margin: const EdgeInsets.only(right: 16, bottom: 8),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: const BorderRadius.all(Radius.circular(99)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: const Icon(Icons.close, size: 24, color: AppColors.border),
-            ),
-          ),
-          // Main content with rounded top corners
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-              ),
-              child: Column(
-                children: [
-                  // Handle bar to indicate draggable
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16, bottom: 8),
-                    child: Container(
-                      width: 40,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(2),
-                      ),
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: Container(
+        width: double.infinity,
+        height: availableHeight * heightRatio!,
+        constraints: BoxConstraints(maxHeight: availableHeight * 0.7),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            // Close button
+            GestureDetector(
+              onTap: () {
+                if (onCancel != null) {
+                  onCancel!();
+                } else {
+                  context.pop();
+                }
+              },
+              child: Container(
+                margin: const EdgeInsets.only(right: 16, bottom: 8),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(99)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
                     ),
-                  ),
-                  // Child content
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const ClampingScrollPhysics(),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: child,
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
+                child: const Icon(
+                  Icons.close,
+                  size: 24,
+                  color: AppColors.border,
+                ),
               ),
             ),
-          ),
-        ],
+            // Main content with rounded top corners
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                ),
+                child: Column(
+                  children: [
+                    // Handle bar to indicate draggable
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16, bottom: 8),
+                      child: Container(
+                        width: 40,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                    ),
+                    // Child content
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: child,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

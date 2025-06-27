@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 import 'package:tripiz_app/common/components/custom_button.dart';
 import 'package:tripiz_app/common/components/custom_input_field.dart';
 import 'package:tripiz_app/common/constants/app_colors.dart';
 import 'package:tripiz_app/common/constants/font_sizes.dart';
 import 'package:tripiz_app/wallet/cubits/recharge-request/recharge_cubit.dart';
 import 'package:tripiz_app/wallet/models/recharge_request.dart';
-import 'package:tripiz_app/wallet/services/recharge_service.dart';
 
 class RechargeBottomCard extends StatefulWidget {
   final String walletId;
@@ -33,9 +33,18 @@ class _RechargeBottomCardState extends State<RechargeBottomCard> {
             ).showSnackBar(SnackBar(content: Text(state.error)));
           }
           if (state is RechargeSuccess) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(const SnackBar(content: Text('Recharge réussie !')));
+            toastification.show(
+              context: context,
+              type: ToastificationType.success,
+              style: ToastificationStyle.fillColored,
+              title: Text("Recharge réussi"),
+              description: Text(
+                "Vous venez de faire une recharge de ${_amountController.text} fcfa avec succès",
+              ),
+              alignment: Alignment.topLeft,
+              autoCloseDuration: const Duration(seconds: 4),
+              backgroundColor: Color(0xFFFFFFFF),
+            );
           }
         },
         builder: (context, state) {
@@ -81,6 +90,8 @@ class _RechargeBottomCardState extends State<RechargeBottomCard> {
                 ],
               ),
               CustomButton(
+                width: double.infinity,
+                height: 50,
                 text: "Recharger",
                 backgroundColor: AppColors.secondary,
                 isLoading: state is RechargeLoading,
@@ -91,7 +102,7 @@ class _RechargeBottomCardState extends State<RechargeBottomCard> {
                           final request = RechargeRequest(
                             walletId: widget.walletId,
                             amount: double.parse(_amountController.text),
-                            phone: _phoneController.text,
+                            phone: "+237${_phoneController.text}",
                             channel: "cm.mobile",
                           );
                           context.read<RechargeCubit>().performRecharge(

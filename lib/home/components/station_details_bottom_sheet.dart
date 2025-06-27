@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:tripiz_app/common/constants/app_colors.dart';
 import 'package:tripiz_app/home/components/itinerary_card.dart';
 import 'package:tripiz_app/home/cubits/itinerary/itinerary_cubit.dart';
@@ -69,7 +70,9 @@ class StationDetailsBottomSheet extends StatelessWidget {
     return BlocBuilder<ItineraryCubit, ItineraryState>(
       builder: (context, state) {
         if (state is ItineraryLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return Column(
+            children: List.generate(2, (index) => _buildShimmerCard()),
+          );
         }
 
         if (state is ItineraryError) {
@@ -93,6 +96,22 @@ class StationDetailsBottomSheet extends StatelessWidget {
 
         return const Text('Aucun itinéraire disponible');
       },
+    );
+  }
+
+  Widget _buildShimmerCard() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.grey.shade100,
+      child: Container(
+        width: double.infinity,
+        height: 100,
+        margin: const EdgeInsets.only(bottom: 10),
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
     );
   }
 }
